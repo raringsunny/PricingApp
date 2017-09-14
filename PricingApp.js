@@ -11,7 +11,7 @@ function product(name, id)
     this.productPrice = []; //array to hold prices entered by different users.
 
     this.enterIdealPrice = function(){
-        product.productPrice.push() /*a method of product class to push the values to productPrice array.
+        this.productPrice.push(10) /*a method of product class to push the values to productPrice array.
                                      not sure if this is correct? */
     }
 }
