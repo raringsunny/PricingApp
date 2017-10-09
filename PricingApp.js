@@ -74,7 +74,7 @@ function main() {
     // Products.FindById(prodId)[0].enterIdealPrice(2, 20.00)
     const prod = findById(2);
     
-    console.log(prod[0].productId);
+    console.log(prod.productName);
 }
 
 function findById(productId) {
