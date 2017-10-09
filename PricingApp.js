@@ -15,7 +15,7 @@ function Product(name, id)
     }
 }
 
-menu();
+//menu();
 
 function menu() {
     /*var choice = 5;
@@ -26,23 +26,64 @@ function menu() {
         console.log("3. Exit");*/
     
         const readline = require('readline');
-
+        
         const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout
         });
 
-        rl.question('Please enter ideal price? ', (answer) => {
+        var selectedProduct = -1;
+
+        var recursiveAsyncReadLine = function(){
+            
+            rl.question('Please select a product by entering Product Id: ', (selectedProduct) => {
+                    
+                if(selectedProduct == 0){
+                    rl.close();
+                }
+                rl.question('Please enter ideal price for the selected product: ', (userIdealPrice) => {
+                        
+                    //search for the selected product
+                    const prod = findById(selectedProduct);
+
+                    if (prod == null){
+                        console.log("Product not found.");
+                    }
+                    else{
+                    prod.enterIdealPrice(userIdealPrice);
+                    console.log(prod.productPrice);
+                    console.log("Product Ideal price added successfully.");   
+                    }
+                    
+                    recursiveAsyncReadLine();
+
+                });
+
+            
+            });
+            
+        };
+        
+        recursiveAsyncReadLine();
+
         // TODO: Log the answer in a database
-        console.log(`Thank you for entering the price: ${answer}`);
+        // console.log(`Your have selected: ` + selectedProduct.productName);
+        
+        // const rl1 = readline.createInterface({
+        // input: process.stdin,
+        // output: process.stdout
+        // });
 
-        rl.close();
-    });
+        // rl1.question('Please enter ideal price for the selected Product ', (userIdealPrice) => {
+                
+        //         prod.addPriceForProduct(userIdealPrice);
 
-        ///choice = scanf();
+        // });
+
     }
 
 const products = [];
+
 main();
 
 function main() {
@@ -64,6 +105,11 @@ function main() {
     const android = addNewProduct("Samsung Galaxy", 2);
     products.push(iPhone);
     products.push(android);
+
+    listProducts();
+    
+    getUserOption();
+
     //console.log(products);
 
     // ask for different prices for a product
@@ -72,15 +118,32 @@ function main() {
     // add the price against that product
     // addPriceForProduct(2, 20.00); // "productId not available"; if available then add the price to that product
     // Products.FindById(prodId)[0].enterIdealPrice(2, 20.00)
-    const prod = findById(2);
+    // const prod = findById(2);
     
-    console.log(prod.productName);
+    //console.log(prod.productName);
+}
+
+function listProducts(){
+    products.forEach(iterateProducts);
+}
+
+function getUserOption(){
+    menu();
+}
+
+function iterateProducts(item, index){
+    console.log("Product Id: " + item.productId + "\t Product name: " + item.productName);
 }
 
 function findById(productId) {
     // return products.filter(p => p.productId == productId); //filter returns an array so changing it to use find method instead.
     return products.find(p => p.productId == productId); 
 }
+
+//unused function
+/*function addPriceForProduct(userIdealPrice){
+    prod.enterIdealPrice(userIdealPrice);
+}*/
 
 function addNewProduct(productName, productId) {
     const product = new Product(productName, productId);
