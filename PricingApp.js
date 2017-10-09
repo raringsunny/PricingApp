@@ -71,10 +71,10 @@ function main() {
     // we will seek that product from the list of products
     // add the price against that product
     // addPriceForProduct(2, 20.00); // "productId not available"; if available then add the price to that product
-    // Products.FindById(prodId).enterIdealPrice(2, 20.00)
+    // Products.FindById(prodId)[0].enterIdealPrice(2, 20.00)
     const prod = findById(2);
     
-    console.log(prod.productName);
+    console.log(prod[0].productId);
 }
 
 function findById(productId) {
