@@ -78,7 +78,8 @@ function main() {
 }
 
 function findById(productId) {
-    return products.filter(p => p.productId == productId);
+    // return products.filter(p => p.productId == productId); //filter returns an array so changing it to use find method instead.
+    return products.find(p => p.productId == productId); 
 }
 
 function addNewProduct(productName, productId) {
