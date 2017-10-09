@@ -13,20 +13,34 @@ function Product(name, id)
         this.productPrice.push(price) /*a method of product class to push the values to productPrice array.
                                      not sure if this is correct? */
     }
-   
 }
 
 menu();
+
 function menu() {
-    var choice = 5;
+    /*var choice = 5;
     while(choice != 3) {
         console.log("Enter your choice: ");
         console.log("1. Add Product: ");
         console.log("2. Add Price for a Product: ");
-        console.log("3. Exit");
+        console.log("3. Exit");*/
+    
+        const readline = require('readline');
+
+        const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+        });
+
+        rl.question('Please enter ideal price? ', (answer) => {
+        // TODO: Log the answer in a database
+        console.log(`Thank you for entering the price: ${answer}`);
+
+        rl.close();
+    });
+
         ///choice = scanf();
     }
-}
 
 const products = [];
 main();
@@ -58,8 +72,9 @@ function main() {
     // add the price against that product
     // addPriceForProduct(2, 20.00); // "productId not available"; if available then add the price to that product
     // Products.FindById(prodId).enterIdealPrice(2, 20.00)
-    const prod = findById(3);
-    console.log(prod);
+    const prod = findById(2);
+    
+    console.log(prod.productName);
 }
 
 function findById(productId) {
