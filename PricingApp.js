@@ -22,48 +22,6 @@ function Product(name, id)
     }
 }
 
-function menu() {
-
-        const readline = require('readline');
-        
-        const ask = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-        });
-
-        var selectedProduct = -1;
-
-        var recursiveAsyncReadLine = function(){
-            
-            ask.question('Please select a product by entering Product Id: ', (selectedProduct) => {
-                    
-                if(selectedProduct == 0){
-                    ask.close();
-                }
-                ask.question('Please enter ideal price for the selected product: ', (userIdealPrice) => {
-                        
-                    //search for the selected product
-                    const prod = findById(selectedProduct);
-
-                    if (prod == null){
-                        console.log("Product not found.");
-                    }
-                    else{
-                    prod.enterIdealPrice(userIdealPrice);
-                    console.log(prod.productPrice);
-                    console.log("Product Ideal price added successfully.");   
-                    }
-                    
-                    recursiveAsyncReadLine();
-                    
-                });
-            
-            });
-            
-        };
-        recursiveAsyncReadLine();
-    }
-
 const products = [];
 
 main();
@@ -78,16 +36,11 @@ function main() {
 
     listProducts(); //list products
     
-    menu(); //menu listing the products and asking user to enter the product id
-
+    menu(); //user gets a prompt to select a product to which the ideal price has to be added
 }
 
 function listProducts(){
-    products.forEach(iterateProducts);
-}
-
-function iterateProducts(item, index){
-    console.log("Product Id: " + item.productId + "\t Product name: " + item.productName);
+    products.forEach(item => console.log("Product Id: " + item.productId + "\t Product name: " + item.productName));
 }
 
 function findById(productId) {
@@ -99,3 +52,43 @@ function addNewProduct(productName, productId) {
     const product = new Product(productName, productId);
     return product;
 }
+
+function menu() {
+
+        const readline = require('readline');
+        
+        const ask = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+        });
+        
+        var selectedProduct = -1;
+
+        var recursiveAsyncReadLine = function(){
+            
+            ask.question('Please select a product by entering Product Id: ', (selectedProduct) => {
+                
+                if(selectedProduct == 0){
+                    ask.close();
+                    return;
+                }
+
+                ask.question('Please enter ideal price for the selected product: ', (userIdealPrice) => {
+                    
+                    //search for the selected product
+                    const prod = findById(selectedProduct);
+
+                    if (prod == null){
+                        console.log("Product not found.");
+                    }
+                    else{
+                    prod.enterIdealPrice(userIdealPrice);
+                    console.log(prod.productPrice);
+                    console.log("Product Ideal price added successfully.");   
+                    }
+                    recursiveAsyncReadLine();
+                }); 
+            });
+        };
+        recursiveAsyncReadLine();
+    }
