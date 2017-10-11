@@ -67,32 +67,36 @@ function menu() {
 
   var selectedProduct = -1;
 
+  var selectAProduct = function(selectedProduct) {
+    if (selectedProduct == 0) {
+      ask.close();
+      return;
+    }
+
+    var enterIdealPrice = function() {
+      //search for the selected product
+      const prod = findById(selectedProduct);
+
+      if (prod == null) {
+        console.log("Product not found.");
+      } else {
+        prod.enterIdealPrice(userIdealPrice);
+        console.log(prod.productPrice);
+        console.log("Product Ideal price added successfully.");
+      }
+      recursiveAsyncReadLine();
+    }
+
+    ask.question(
+      "Please enter ideal price for the selected product: ",
+      userIdealPrice => enterIdealPrice(userIdealPrice)
+    );
+  }
+
   var recursiveAsyncReadLine = function() {
     ask.question(
       "Please select a product by entering Product Id: ",
-      selectedProduct => {
-        if (selectedProduct == 0) {
-          ask.close();
-          return;
-        }
-
-        ask.question(
-          "Please enter ideal price for the selected product: ",
-          userIdealPrice => {
-            //search for the selected product
-            const prod = findById(selectedProduct);
-
-            if (prod == null) {
-              console.log("Product not found.");
-            } else {
-              prod.enterIdealPrice(userIdealPrice);
-              console.log(prod.productPrice);
-              console.log("Product Ideal price added successfully.");
-            }
-            recursiveAsyncReadLine();
-          }
-        );
-      }
+      selectedProduct => selectAProduct(selectedProduct)
     );
   };
   recursiveAsyncReadLine();
