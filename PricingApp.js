@@ -97,7 +97,3 @@ function menu() {
   };
   recursiveAsyncReadLine();
 }
-
-module.exports = {
-	addNewProduct: addNewProduct
-}
