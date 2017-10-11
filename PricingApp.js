@@ -113,6 +113,6 @@ function userInput() {
       
       ask.question(msg, selectedProduct => selectAProduct(selectedProduct));
       
-    };
+    }();
   };
 }
