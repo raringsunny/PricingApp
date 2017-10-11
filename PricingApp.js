@@ -36,7 +36,7 @@ function main() {
 
   listProducts(); //list products
 
-  menu(); //user gets a prompt to select a product to which the ideal price has to be added
+  productSelection(); //user gets a prompt to select a product to which the ideal price has to be added
 }
 
 function listProducts() {
@@ -57,13 +57,19 @@ function addNewProduct(productName, productId) {
   return product;
 }
 
-function menu() {
+function readConsole(){
   const readline = require("readline");
 
   const ask = readline.createInterface({
     input: process.stdin,
     output: process.stdout
   });
+  return ask;
+}
+
+function productSelection() {
+
+  var ask = readConsole();
 
   var selectedProduct = -1;
 
@@ -73,7 +79,7 @@ function menu() {
       return;
     }
 
-    var enterIdealPrice = function() {
+    var enterIdealPrice = function(userIdealPrice) {
       //search for the selected product
       const prod = findById(selectedProduct);
 
