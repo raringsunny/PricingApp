@@ -57,7 +57,7 @@ function addNewProduct(productName, productId) {
   return product;
 }
 
-function readConsole() {
+function readConsole(){
   const readline = require("readline");
 
   const ask = readline.createInterface({
@@ -69,50 +69,39 @@ function readConsole() {
 
 function productSelection() {
   var ask = readConsole();
+  
+  var selectedProduct = -1;
 
-  var enterIdealPrice = function(userIdealPrice) {
-    //search for the selected product
-    const prod = findById(selectedProduct);
-
-    if (prod == null) {
-      console.log("Product not found.");
-    } else {
-      prod.enterIdealPrice(userIdealPrice);
-      console.log(prod.productPrice);
-      console.log("Product Ideal price added successfully.");
+  var selectAProduct = function(selectedProduct) {
+    if (selectedProduct == 0) {
+      ask.close();
+      return;
     }
-    recursiveAsyncReadLine();
-  };
 
-  // ask.question(
-  //   "Please enter ideal price for the selected product: ",
-  //   userIdealPrice => enterIdealPrice(userIdealPrice)
-  // );
+    var enterIdealPrice = function(userIdealPrice) {
+      //search for the selected product
+      const prod = findById(selectedProduct);
+      if (prod == null) {
+        console.log("Product not found.");
+      } else {
+        prod.enterIdealPrice(userIdealPrice);
+        console.log(prod.productPrice);
+        console.log("Product Ideal price added successfully.");
+      }
+      recursiveAsyncReadLine();
+    }
+
+    ask.question(
+      "Please enter ideal price for the selected product: ",
+      userIdealPrice => enterIdealPrice(userIdealPrice)
+    );
+  }
 
   var recursiveAsyncReadLine = function() {
-    var usrInput = new userInput();
-    console.log('testing...')
-    usrInput.getProdId("Please select a product by entering Product Id: ", ask);
-    
+    ask.question(
+      "Please select a product by entering Product Id: ",
+      selectedProduct => selectAProduct(selectedProduct)
+    );
   };
-
   recursiveAsyncReadLine();
-  
-}
-
-function userInput() {
-  this.getProdId = function(msg, ask) {
-    var selectedProduct = -1;
-    
-    var selectAProduct = function(selectedProduct) {
-      
-      if (selectedProduct == 0) {
-        ask.close();
-        return;
-      }
-      
-      ask.question(msg, selectedProduct => selectAProduct(selectedProduct));
-      
-    }();
-  };
 }
