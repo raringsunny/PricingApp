@@ -71,7 +71,7 @@ function askProductId() {
 
 function askIdealPrice(productId) {
   return new Promise(resolve => {
-    if (productId == 0) {
+    if (productId == 0) { //Product Id = 0 (zero) indicates that the user does not want to continue. Program exits.
       ask.close();
       return;
     }
