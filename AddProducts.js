@@ -23,10 +23,10 @@ main();
 
 function main() {
   const iPhone = addNewProduct("iPhone", 1);
-  iPhone.enterIdealPrice(200);
+  //   iPhone.enterIdealPrice(200);
 
   const android = addNewProduct("Samsung Galaxy", 2);
-  android.enterIdealPrice(100);
+  //   android.enterIdealPrice(100);
 
   products.push(iPhone);
   products.push(android);
@@ -71,7 +71,8 @@ function askProductId() {
 
 function askIdealPrice(productId) {
   return new Promise(resolve => {
-    if (productId == 0) { //Product Id = 0 (zero) indicates that the user does not want to continue. Program exits.
+    if (productId == 0) {
+      //Product Id = 0 (zero) indicates that the user does not want to continue. Program exits.
       ask.close();
       return;
     }
@@ -101,7 +102,30 @@ function addIdealPrice() {
       if (prod != null) {
         prod.enterIdealPrice(request.userIdealPrice);
         console.log("Product: ", prod.productPrice);
+        calculateIdealPrice(prod);
       }
       recursiveAsyncReadLine();
     });
+}
+
+function calculateIdealPrice(prod) {
+  var idealPrice = 0;
+  var cnt = 0;
+
+  prod.productPrice.sort();
+
+  if (prod.productPrice.length > 4){
+    for(i=2;i <= (prod.productPrice.length - 3);i++) {
+      idealPrice = parseInt(prod.productPrice[i]) + parseInt(idealPrice);
+      cnt++;
+    }
+    if(cnt > 0){
+      idealPrice = (idealPrice / cnt);
+    }
+    // prod.productPrice.splice(0, 2);
+    // prod.productPrice.pop();
+    // prod.productPrice.pop();
+    // console.log(prod.productPrice);
+    console.log("Product ideal price: ", idealPrice);
+  }
 }
