@@ -110,22 +110,33 @@ function addIdealPrice() {
 
 function calculateIdealPrice(prod) {
   var idealPrice = 0;
-  var cnt = 0;
+  var newProdPrice = [];
+  // var cnt = 0;
 
   prod.productPrice.sort();
 
   if (prod.productPrice.length > 4){
-    for(i=2;i <= (prod.productPrice.length - 3);i++) {
-      idealPrice = parseInt(prod.productPrice[i]) + parseInt(idealPrice);
-      cnt++;
-    }
-    if(cnt > 0){
-      idealPrice = (idealPrice / cnt);
-    }
+    // for(i=2;i <= (prod.productPrice.length - 3);i++) {
+    //   idealPrice = parseInt(prod.productPrice[i]) + parseInt(idealPrice);
+    //   cnt++;
+    // }
+    // if(cnt > 0){
+    //   idealPrice = (idealPrice / cnt);
+    // }
+
+    newProdPrice = prod.productPrice.splice(0, 2);
+    newProdPrice = prod.productPrice.pop();
+    newProdPrice = prod.productPrice.pop();
+    
+    idealPrice = newProdPrice.reduce(avgIdealPrice);
     // prod.productPrice.splice(0, 2);
     // prod.productPrice.pop();
     // prod.productPrice.pop();
     // console.log(prod.productPrice);
     console.log("Product ideal price: ", idealPrice);
   }
+}
+
+function avgIdealPrice(prev, next){
+  return parseInt(prev) + parseInt(next);
 }
